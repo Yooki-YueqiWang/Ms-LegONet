@@ -1,0 +1,4 @@
+# Tested with Python 3.12.7, numpy 1.26.4, scipy 1.13.1, torch 2.4.0 (CUDA 12.4)
+numpy>=1.26
+scipy>=1.11
+torch>=2.1

@@ -9,7 +9,7 @@ Yueqi Wang\*, Cindy Xiangrui Kong\*, Guang Lin (Purdue University)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![arXiv](https://img.shields.io/badge/arXiv-2611.13515-b31b1b.svg)](https://arxiv.org/abs/2611.13515)
-![2D code](https://img.shields.io/badge/2D-coming%20soon-yellow)
+![2D code](https://img.shields.io/badge/2D-available-brightgreen)
 ![3D code](https://img.shields.io/badge/3D-after%20acceptance-lightgrey)
 
 Ms-LegONet is a plug-and-play learned block for heterogeneous elliptic problems. One network per spatial dimension is trained once on single coefficient patches and reused, without retraining, across coefficient layouts, sources, boundary data and domain sizes within the trained coefficient class. The network predicts only the coefficient-dependent **local space** of a patch. Everything after the network evaluation is deterministic linear algebra: local Galerkin solves, recursive static condensation and one global skeleton solve.
@@ -164,7 +164,7 @@ A training label is the set of $`m_\Gamma`$ zero-trace corrections of one patch,
 \mathcal{J}_t(\theta)=\frac{1}{|\mathcal{I}_t|}\sum_{i\in\mathcal{I}_t}\Big[\beta_{\mathrm{space}}\,\mathcal{L}_{\mathrm{space},i}+\beta_{\mathrm{tail}}\,\mathcal{L}_{\mathrm{tail},i}+\beta_{\mathrm{phys}}\,\mathcal{L}_{\mathrm{phys},i}\Big],
 ```
 
-where $`\mathcal{L}_{\mathrm{space}}`$ averages all defects, $`\mathcal{L}_{\mathrm{tail}}`$ averages the $`q_{\mathrm{tail}}`$ largest, and $`\mathcal{L}_{\mathrm{phys}}`$ measures the relative energy and $`L^2`$ errors of the local Galerkin responses on $`M`$ fixed probe traces, including a conditional value at risk of the largest errors. All three terms depend on the predicted space only, not on its basis.
+where $`\mathcal{L}_{\mathrm{space}}`$ averages all defects, $`\mathcal{L}_{\mathrm{tail}}`$ averages the $`q_{\mathrm{tail}}`$ largest, and $`\mathcal{L}_{\mathrm{phys}}`$ adds, over $`M`$ fixed probe traces (random combinations of the port basis), the mean relative energy error of the local Galerkin responses, the conditional value at risk of the largest of these errors, and the mean relative error in the $`\kappa`$-weighted $`L^2`$ norm. All three terms depend on the predicted space only, not on its basis.
 
 ---
 
@@ -231,7 +231,16 @@ Ms-LegONet/
 ├── LICENSE          # MIT
 ├── assets/          # figures used in this README
 ├── 2D/              # 2D implementation (running code only)
-│   └── README.md    # how to generate data, train and solve in 2D
+│   ├── README.md          # how to generate data, train and solve in 2D
+│   ├── coefficients.py    # the 11 coefficient families
+│   ├── generate_data.py   # coefficient patches and zero-trace correction labels
+│   ├── fem.py             # Q1 primitives and exact local solves
+│   ├── model.py           # network of the local block
+│   ├── losses.py          # energy orthonormalization and training loss
+│   ├── train.py           # training loop
+│   ├── solve.py           # online solver: static condensation and skeleton solve
+│   ├── run_example.sh     # small end-to-end example
+│   └── requirements.txt
 └── 3D/              # 3D implementation, released after the paper is accepted
     └── README.md
 ```
