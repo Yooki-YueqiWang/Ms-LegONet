@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
+.venv/
+venv/
+
+# Checkpoints and model weights (not distributed in this repository)
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+checkpoints/
+
+# Generated data and outputs
+data/
+*.npz
+*.npy
+*.h5
+*.hdf5
+outputs/
+logs/
+runs/
+wandb/
+
+# Figures produced by local analysis (README figures live in assets/)
+*.pdf
+results/
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
